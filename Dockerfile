@@ -1,10 +1,13 @@
-FROM i386/alpine
+FROM docker.io/amd64/alpine
 
 # Install required packages
-RUN apk --update --no-cache add xvfb x11vnc openbox samba-winbind-clients 
+RUN apk --update --no-cache add xvfb x11vnc openbox samba-winbind-clients ncurses
 RUN echo "https://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk --no-cache add wine
-
+RUN apk --no-cache add msttcorefonts-installer fontconfig && \ 
+    update-ms-fonts && \ 
+    fc-cache -f
+    
 # Configure the virtual display port
 ENV DISPLAY :0
 
